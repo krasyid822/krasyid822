@@ -1,0 +1,36 @@
+name: Update Engineering Audit
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Jalan otomatis setiap jam 00:00 UTC
+  workflow_dispatch: # Bisa dijalankan manual kapan saja lewat tab Actions
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run GitHub GraphQL Audit
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python audit.py
+
+      - name: Commit and push updated README
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add README.md
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore(audit): update verified engineering metrics" && git push)
