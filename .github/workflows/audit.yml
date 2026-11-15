@@ -25,7 +25,7 @@ jobs:
 
       - name: Run GitHub GraphQL Audit
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.AUDIT_PAT }}
         run: python audit.py
 
       - name: Commit and push updated README
