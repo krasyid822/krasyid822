@@ -1,11 +1,20 @@
 import os
 import re
+import sys
 import requests
-from datetime import datetime
+from datetime import datetime, timezone
 
-TOKEN = os.environ["GITHUB_TOKEN"]
+TOKEN = os.environ.get("GITHUB_TOKEN")
+if not TOKEN:
+    print("ERROR: GITHUB_TOKEN tidak ditemukan di environment variables.")
+    sys.exit(1)
+
 USERNAME = "krasyid822"
-HEADERS = {"Authorization": f"Bearer {TOKEN}"}
+HEADERS = {
+    "Authorization": f"Bearer {TOKEN}",
+    "User-Agent": f"{USERNAME}-profile-audit",
+    "Accept": "application/vnd.github+json"
+}
 
 QUERY = """
 query($login: String!) {
@@ -60,13 +69,32 @@ query($login: String!) {
 """
 
 def run_audit():
-    res = requests.post("https://api.github.com/graphql", json={"query": QUERY, "variables": {"login": USERNAME}}, headers=HEADERS)
-    data = res.json()["data"]["user"]
+    res = requests.post(
+        "https://api.github.com/graphql",
+        json={"query": QUERY, "variables": {"login": USERNAME}},
+        headers=HEADERS,
+        timeout=30
+    )
+    
+    # Validasi status HTTP sebelum parsing JSON
+    if res.status_code != 200:
+        print(f"HTTP Error {res.status_code}: {res.text}")
+        sys.exit(1)
+
+    payload = res.json()
+    if "errors" in payload:
+        print(f"GraphQL Error: {payload['errors']}")
+        sys.exit(1)
+
+    data = payload.get("data", {}).get("user")
+    if not data:
+        print("ERROR: Data user tidak ditemukan atau token tidak memiliki izin 'read:user'.")
+        sys.exit(1)
     
     contrib = data["contributionsCollection"]
     repos = data["repositories"]["nodes"]
     
-    # 1. Hitung External Merged PRs (Bukti kolaborasi & lolos code review orang lain)
+    # 1. Hitung External Merged PRs
     ext_merged_prs = 0
     for repo_contrib in contrib["pullRequestContributionsByRepository"]:
         repo_owner = repo_contrib["repository"]["owner"]["login"]
@@ -93,7 +121,6 @@ def run_audit():
                 total_sampled_commits += 1
                 total_additions += c["additions"]
                 total_deletions += c["deletions"]
-                # Cek apakah commit message mengikuti standar (misal Conventional Commits atau > 15 karakter)
                 msg = c["messageHeadline"].strip()
                 if len(msg) > 15 and not msg.lower().startswith(("update", "fix", "wip", "test")):
                     meaningful_commits += 1
@@ -101,7 +128,8 @@ def run_audit():
     refactor_ratio = round((total_deletions / total_additions * 100), 1) if total_additions > 0 else 0
     commit_hygiene = round((meaningful_commits / total_sampled_commits * 100), 1) if total_sampled_commits > 0 else 0
 
-    # Format output tabel Markdown yang kredibel
+    now_utc = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')
+
     markdown_output = f"""
 | Metrik Evaluasi Teknis | Nilai Terverifikasi | Indikator Kualitas |
 | :--- | :--- | :--- |
@@ -111,7 +139,7 @@ def run_audit():
 | **Commit Message Hygiene** | `{commit_hygiene}%` | Konsistensi penulisan log perubahan yang deskriptif |
 | **Repo dengan CI/CD Aktif** | `{ci_cd_repos} dari {len(repos)} repo` | Penerapan otomasi *build/test* (`.github/workflows`) |
 
-*Terakhir diaudit secara otomatis via GitHub GraphQL API pada: `{datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')}`*
+*Terakhir diaudit secara otomatis via GitHub GraphQL API pada: `{now_utc}`*
 """
     return markdown_output.strip()
 
@@ -120,6 +148,10 @@ def update_readme(new_content):
         readme = f.read()
     
     pattern = r"(<!-- AUDIT_START -->)(.*?)(<!-- AUDIT_END -->)"
+    if not re.search(pattern, readme, flags=re.DOTALL):
+        print("ERROR: Tag <!-- AUDIT_START --> dan <!-- AUDIT_END --> tidak ditemukan di README.md.")
+        sys.exit(1)
+
     updated = re.sub(pattern, rf"\1\n{new_content}\n\3", readme, flags=re.DOTALL)
     
     with open("README.md", "w", encoding="utf-8") as f:
@@ -128,3 +160,4 @@ def update_readme(new_content):
 if __name__ == "__main__":
     report = run_audit()
     update_readme(report)
+    print("Audit berhasil diperbarui ke README.md")
