@@ -6,15 +6,13 @@
 |:---|:---|:---|
 | **External Merged PRs** | `0 PRs` | Seluruh PR *merged* di repositori luar (sepanjang masa) |
 | **Code Reviews Performed** | `1 Reviews` | Audit & tinjauan kode terhadap kontributor lain |
-| **Refactoring Ratio** | `56.9%` (`-4,043,631` / `+7,101,819` baris) | Seluruh riwayat baris kode dari `83` repo terkomputasi |
-| **Commit Message Hygiene** | `64.3%` | Dari **100% seluruh `1,633` commit** di `83` repo aktif |
+| **Refactoring Ratio** | `56.9%` (`-4,043,655` / `+7,101,854` baris) | Seluruh riwayat baris kode dari `83` repo terkomputasi |
+| **Commit Message Hygiene** | `64.4%` | Dari **100% seluruh `1,636` commit** di `83` repo aktif |
 | **Repo dengan CI/CD Aktif** | `14 dari 83 repo` `███░░░░░░░░░░░░░░░░░` | Otomasi *pipeline* (`.github/workflows`) |
 | **Repo dengan Struktur Test** | `19 dari 83 repo` `████░░░░░░░░░░░░░░░░` | Keberadaan direktori `test/`, `tests/`, `__tests__/`, atau `spec/` |
 
 ### ⚠️ Temuan Audit & Anomali Repositori (Perlu Perhatian)
-- **`krasyid822`**: Direktori dependensi/build (`__pycache__`) ikut ter-commit ke repositori.
-- **`stream`**: Ukuran repositori besar (`36367.0 MB`) — indikasi file biner/aset besar tanpa Git LFS.
-- **`aplikasi_mobile`**: Ukuran repositori besar (`175.8 MB`) — indikasi file biner/aset besar tanpa Git LFS.
+- **`stream`**: Ukuran repositori besar (`36366.9 MB`) — indikasi file biner/aset besar tanpa Git LFS.
 - **`local_html_transfer`**: Terdeteksi *bulk/giant commit* (`+91,712` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`auto_reply`**: Terdeteksi *bulk/giant commit* (`+16,619` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`photobooth`**: Terdeteksi *bulk/giant commit* (`+85,336` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
@@ -38,10 +36,11 @@
 - **`aplikasi_mobile_lanjut`**: Repo diarsipkan dan tidak akan diperbarui lagi. Ukuran besar (49.9 MB) diketahui sengaja. Temuan ukuran besar dikecualikan dari anomali audit.
 - **`friends_till_jannah`**: Repo diarsipkan dan tidak akan diperbarui lagi. Ukuran besar (594.9 MB) diketahui sengaja. Temuan ukuran besar dikecualikan dari anomali audit.
 - **`file-container`**: Repo bagian eksperimental untuk menyimpan file menggunakan base64 dan chunk. Besarnya repo (145.1 MB) adalah sengaja karena menyimpan aset dalam bentuk base64 yang di-chunk, bukan file biner asli tanpa LFS. Temuan ukuran besar dikecualikan dari anomali audit.
+- **`aplikasi_mobile`**: Repo diarsipkan dan tidak akan diperbarui lagi (tidak ada rencana update). Ukuran besar (175.8 MB) diketahui sengaja. Temuan ukuran besar dikecualikan dari anomali audit.
 
 ### ℹ️ Penjelasan Umum
 Banyak *bulk/giant commit* terjadi karena saat memulai proyek baru saya sering tidak melakukan `git init` lebih awal (fokus pada uji ide terlebih dahulu), lalu saat proyek dianggap cukup stabil baru di-backup ke GitHub sekaligus dalam satu commit besar. Saya juga kadang bekerja pada source code yang sudah jadi, kemudian melakukan beberapa pembaruan dan mengunggahnya sebagai backup ke repo GitHub. Oleh karena itu, lonjakan baris kode dalam satu siklus commit biasanya merupakan hasil backup massal, bukan indikasi kode tanpa pemecahan atomik.
 
 
-*Audit populasi penuh (**100% dari 83 repositori orisinal** & **1,633 commit**) dijalankan otomatis via GitHub API pada `2026-11-16 08:29 UTC`*
+*Audit populasi penuh (**100% dari 83 repositori orisinal** & **1,636 commit**) dijalankan otomatis via GitHub API pada `2026-11-16 08:50 UTC`*
 <!-- AUDIT_END -->
