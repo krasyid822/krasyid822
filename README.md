@@ -4,8 +4,8 @@
 | :--- | :--- | :--- |
 | **External Merged PRs** | `0 PRs` | Seluruh PR *merged* di repositori luar (sepanjang masa) |
 | **Code Reviews Performed** | `1 Reviews` | Audit & tinjauan kode terhadap kontributor lain |
-| **Refactoring Ratio** | `58.1%` (`-3,920,918` / `+6,745,937` baris) | Seluruh riwayat baris kode dari `81` repo terkomputasi |
-| **Commit Message Hygiene** | `65.6%` | Dari **100% seluruh `1,731` commit** di `83` repo aktif |
+| **Refactoring Ratio** | `58.1%` (`-3,920,919` / `+6,745,981` baris) | Seluruh riwayat baris kode dari `81` repo terkomputasi |
+| **Commit Message Hygiene** | `65.6%` | Dari **100% seluruh `1,732` commit** di `83` repo aktif |
 | **Repo dengan CI/CD Aktif** | `14 dari 83 repo` | Otomasi *pipeline* (`.github/workflows`) |
 | **Repo dengan Struktur Test** | `19 dari 83 repo` | Keberadaan direktori `test/`, `tests/`, `__tests__/`, atau `spec/` |
 
@@ -43,5 +43,5 @@
 - **`github-pages`**: Terdeteksi *bulk/giant commit* (`+176,037` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`pemrograman-web`**: Terdeteksi *bulk/giant commit* (`+22,541` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 
-*Audit populasi penuh (**100% dari 83 repositori orisinal** & **1,731 commit**) dijalankan otomatis via GitHub API pada `2026-11-15 05:52 UTC`*
+*Audit populasi penuh (**100% dari 83 repositori orisinal** & **1,732 commit**) dijalankan otomatis via GitHub API pada `2026-11-16 06:08 UTC`*
 <!-- AUDIT_END -->
