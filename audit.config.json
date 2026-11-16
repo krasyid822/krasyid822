@@ -28,6 +28,10 @@
     {
       "name": "file-container",
       "reason": "Repo bagian eksperimental untuk menyimpan file menggunakan base64 dan chunk. Besarnya repo (145.1 MB) adalah sengaja karena menyimpan aset dalam bentuk base64 yang di-chunk, bukan file biner asli tanpa LFS. Temuan ukuran besar dikecualikan dari anomali audit."
+    },
+    {
+      "name": "aplikasi_mobile",
+      "reason": "Repo diarsipkan dan tidak akan diperbarui lagi (tidak ada rencana update). Ukuran besar (175.8 MB) diketahui sengaja. Temuan ukuran besar dikecualikan dari anomali audit."
     }
   ]
 }
