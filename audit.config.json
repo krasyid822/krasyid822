@@ -1,0 +1,33 @@
+{
+  "general_explanation": "Banyak *bulk/giant commit* terjadi karena saat memulai proyek baru saya sering tidak melakukan `git init` lebih awal (fokus pada uji ide terlebih dahulu), lalu saat proyek dianggap cukup stabil baru di-backup ke GitHub sekaligus dalam satu commit besar. Saya juga kadang bekerja pada source code yang sudah jadi, kemudian melakukan beberapa pembaruan dan mengunggahnya sebagai backup ke repo GitHub. Oleh karena itu, lonjakan baris kode dalam satu siklus commit biasanya merupakan hasil backup massal, bukan indikasi kode tanpa pemecahan atomik.",
+  "excluded_repos": [
+    {
+      "name": "stream_drive",
+      "reason": "Repo ini sengaja digunakan sebagai tempat penyimpanan file biner .ts (transport stream). Besarnya repo (~100 GB) tidak mengindikasikan masalah karena tujuan utamanya adalah arsip file biner, bukan kode sumber. Oleh karena itu, temuan ukuran besar dan timeout diff pada repo ini dikecualikan dari anomali audit."
+    },
+    {
+      "name": "ukmipolmed",
+      "reason": "Repo diarsipkan karena menyimpan konten unik yang tidak boleh dihapus. Ukuran besar (~1.7 GB) diketahui sengaja dan tidak akan diperbarui karena terlalu besar untuk di cloning. Temuan ukuran besar dikecualikan dari anomali audit."
+    },
+    {
+      "name": "adminabsensi.smkn8medan.sch.id",
+      "reason": "Repo diarsipkan karena sudah final dan tidak akan diperbarui (perubahan terbaru ada di tangan orang lain). Ukuran besar (57 MB) disebabkan folder backup proyek versi VPS (`VIRTUAL_PRIVATE_SERVER/`) yang sengaja disatukan ke satu subfolder. Temuan ukuran besar dikecualikan dari anomali audit."
+    },
+    {
+      "name": "proyek-jadwal-sholat",
+      "reason": "Repo diarsipkan / ditinggalkan dan tidak akan diperbarui lagi. Temuan direktori dependensi/build (`node_modules`) yang ikut ter-commit dikecualikan dari anomali audit."
+    },
+    {
+      "name": "aplikasi_mobile_lanjut",
+      "reason": "Repo diarsipkan dan tidak akan diperbarui lagi. Ukuran besar (49.9 MB) diketahui sengaja. Temuan ukuran besar dikecualikan dari anomali audit."
+    },
+    {
+      "name": "friends_till_jannah",
+      "reason": "Repo diarsipkan dan tidak akan diperbarui lagi. Ukuran besar (594.9 MB) diketahui sengaja. Temuan ukuran besar dikecualikan dari anomali audit."
+    },
+    {
+      "name": "file-container",
+      "reason": "Repo bagian eksperimental untuk menyimpan file menggunakan base64 dan chunk. Besarnya repo (145.1 MB) adalah sengaja karena menyimpan aset dalam bentuk base64 yang di-chunk, bukan file biner asli tanpa LFS. Temuan ukuran besar dikecualikan dari anomali audit."
+    }
+  ]
+}

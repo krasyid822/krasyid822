@@ -2,6 +2,7 @@ import os
 import re
 import sys
 import time
+import json
 import requests
 from datetime import datetime, timezone
 
@@ -16,6 +17,49 @@ HEADERS = {
     "User-Agent": f"{USERNAME}-profile-audit",
     "Accept": "application/vnd.github+json"
 }
+
+CONFIG_FILE = "audit.config.json"
+
+
+def load_audit_config():
+    excluded = set()
+    reasons = {}
+    general_explanation = ""
+    if os.path.exists(CONFIG_FILE):
+        try:
+            with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+                cfg = json.load(f)
+            general_explanation = cfg.get("general_explanation", "")
+            for item in cfg.get("excluded_repos", []):
+                name = item.get("name")
+                if name:
+                    excluded.add(name)
+                    reasons[name] = item.get("reason", "")
+        except (json.JSONDecodeError, OSError) as e:
+            print(f"[Config] Gagal membaca {CONFIG_FILE}: {e}")
+    return excluded, reasons, general_explanation
+
+
+EXCLUDED_REPOS, EXCLUSION_REASONS, GENERAL_EXPLANATION = load_audit_config()
+
+
+def progress_bar(value, total, width=20):
+    if total <= 0:
+        return "▱" * width
+    filled = int(width * value / total)
+    return "█" * filled + "░" * (width - filled)
+
+
+def pct_label(value, total):
+    return f"{value}/{total} ({round(value / total * 100, 1)}%)" if total else f"{value}/{total} (0%)"
+
+
+def section_header(icon, title):
+    return f"### {icon} {title}"
+
+
+def badge(text):
+    return f"`{text}`"
 
 # Tahap 1: Profil & Seluruh External Merged PRs (Paginated)
 PROFILE_QUERY = """
@@ -240,13 +284,13 @@ def run_audit():
             
             # Cek apakah ada folder build/dependency yang bocor ke repository
             leaked_dirs = entry_names.intersection(ignored_artifact_names)
-            if leaked_dirs:
+            if leaked_dirs and repo_name not in EXCLUDED_REPOS:
                 anomalies.append(
                     f"- **`{repo_name}`**: Direktori dependensi/build (`{', '.join(sorted(leaked_dirs))}`) ikut ter-commit ke repositori."
                 )
 
         # Cek ukuran repositori tidak wajar (> 50 MB)
-        if disk_kb > 50000:
+        if disk_kb > 50000 and repo_name not in EXCLUDED_REPOS:
             anomalies.append(
                 f"- **`{repo_name}`**: Ukuran repositori besar (`{round(disk_kb / 1024, 1)} MB`) — indikasi file biner/aset besar tanpa Git LFS."
             )
@@ -289,11 +333,11 @@ def run_audit():
             total_deletions += dels
             counted_freq_repos += 1
             # Deteksi lonjakan commit raksasa (> 15.000 baris dalam 1 minggu)
-            if max_weekly > 15000:
+            if max_weekly > 15000 and repo_name not in EXCLUDED_REPOS:
                 anomalies.append(
                     f"- **`{repo_name}`**: Terdeteksi *bulk/giant commit* (`+{max_weekly:,}` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik."
                 )
-        elif status in ("COMPUTE_TIMEOUT_202", "TOO_LARGE_422", "TIMEOUT"):
+        elif status in ("COMPUTE_TIMEOUT_202", "TOO_LARGE_422", "TIMEOUT") and repo_name not in EXCLUDED_REPOS:
             anomalies.append(
                 f"- **`{repo_name}`**: Komputasi *diff* ditolak/timeout oleh API GitHub (`{status}`) — indikasi riwayat *commit* terlalu masif atau file biner berat."
             )
@@ -303,25 +347,43 @@ def run_audit():
 
     now_utc = datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M UTC')
 
+    repo_total = len(active_repos)
+    ci_bar = progress_bar(ci_cd_repos, repo_total)
+    test_bar = progress_bar(tested_repos, repo_total)
+
     # Susun bagian laporan anomali / masalah yang perlu diperhatikan
     if anomalies:
-        anomalies_section = "#### ⚠️ Temuan Audit & Anomali Repositori (Perlu Perhatian)\n" + "\n".join(anomalies)
+        anomalies_section = f"### ⚠️ Temuan Audit & Anomali Repositori (Perlu Perhatian)\n" + "\n".join(anomalies)
     else:
-        anomalies_section = "#### ✅ Temuan Audit & Anomali Repositori\n*Tidak ditemukan anomali commit raksasa, kebocoran dependensi (`node_modules`/`.venv`), maupun pembengkakan ukuran repositori.*"
+        anomalies_section = "### ✅ Temuan Audit & Anomali Repositori\n*Tidak ditemukan anomali commit raksasa, kebocoran dependensi (`node_modules`/`.venv`), maupun pembengkakan ukuran repositori.*"
+
+    if EXCLUSION_REASONS:
+        excluded_section = "\n### ℹ️ Repositori dengan Penjelasan (Dikecualikan dari Anomali)\n"
+        for name, reason in EXCLUSION_REASONS.items():
+            excluded_section += f"- **`{name}`**: {reason}\n"
+    else:
+        excluded_section = ""
+
+    if GENERAL_EXPLANATION:
+        explanation_section = "\n### ℹ️ Penjelasan Umum\n" + GENERAL_EXPLANATION + "\n"
+    else:
+        explanation_section = ""
 
     markdown_output = f"""
-| Metrik Evaluasi Teknis | Nilai Terverifikasi | Cakupan Populasi (100% Full Scan) |
-| :--- | :--- | :--- |
-| **External Merged PRs** | `{ext_merged_prs} PRs` | Seluruh PR *merged* di repositori luar (sepanjang masa) |
-| **Code Reviews Performed** | `{contrib['totalPullRequestReviewContributions']} Reviews` | Audit & tinjauan kode terhadap kontributor lain |
-| **Refactoring Ratio** | `{refactor_ratio}%` (`-{total_deletions:,}` / `+{total_additions:,}` baris) | Seluruh riwayat baris kode dari `{counted_freq_repos}` repo terkomputasi |
-| **Commit Message Hygiene** | `{commit_hygiene}%` | Dari **100% seluruh `{total_all_commits:,}` commit** di `{len(active_repos)}` repo aktif |
-| **Repo dengan CI/CD Aktif** | `{ci_cd_repos} dari {len(active_repos)} repo` | Otomasi *pipeline* (`.github/workflows`) |
-| **Repo dengan Struktur Test** | `{tested_repos} dari {len(active_repos)} repo` | Keberadaan direktori `test/`, `tests/`, `__tests__/`, atau `spec/` |
+{section_header('📊', 'Ringkasan Evaluasi Teknis')}
 
-{anomalies_section}
+| Metrik | Nilai Terverifikasi | Cakupan Populasi |
+|:---|:---|:---|
+| **External Merged PRs** | {badge(f'{ext_merged_prs} PRs')} | Seluruh PR *merged* di repositori luar (sepanjang masa) |
+| **Code Reviews Performed** | {badge(f'{contrib["totalPullRequestReviewContributions"]} Reviews')} | Audit & tinjauan kode terhadap kontributor lain |
+| **Refactoring Ratio** | {badge(f'{refactor_ratio}%')} (`-{total_deletions:,}` / `+{total_additions:,}` baris) | Seluruh riwayat baris kode dari `{counted_freq_repos}` repo terkomputasi |
+| **Commit Message Hygiene** | {badge(f'{commit_hygiene}%')} | Dari **100% seluruh `{total_all_commits:,}` commit** di `{repo_total}` repo aktif |
+| **Repo dengan CI/CD Aktif** | {badge(f'{ci_cd_repos} dari {repo_total} repo')} `{ci_bar}` | Otomasi *pipeline* (`.github/workflows`) |
+| **Repo dengan Struktur Test** | {badge(f'{tested_repos} dari {repo_total} repo')} `{test_bar}` | Keberadaan direktori `test/`, `tests/`, `__tests__/`, atau `spec/` |
 
-*Audit populasi penuh (**100% dari {len(active_repos)} repositori orisinal** & **{total_all_commits:,} commit**) dijalankan otomatis via GitHub API pada `{now_utc}`*
+{anomalies_section}{excluded_section}{explanation_section}
+
+*Audit populasi penuh (**100% dari {repo_total} repositori orisinal** & **{total_all_commits:,} commit**) dijalankan otomatis via GitHub API pada `{now_utc}`*
 """
     return markdown_output.strip()
 
