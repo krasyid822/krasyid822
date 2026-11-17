@@ -6,20 +6,18 @@
 |:---|:---|:---|
 | **External Merged PRs** | `0 PRs` | Seluruh PR *merged* di repositori luar (sepanjang masa) |
 | **Code Reviews Performed** | `1 Reviews` | Audit & tinjauan kode terhadap kontributor lain |
-| **Refactoring Ratio** | `56.9%` (`-4,043,655` / `+7,101,854` baris) | Seluruh riwayat baris kode dari `83` repo terkomputasi |
-| **Commit Message Hygiene** | `64.4%` | Dari **100% seluruh `1,636` commit** di `83` repo aktif |
+| **Refactoring Ratio** | `57.1%` (`-4,041,832` / `+7,081,479` baris) | Seluruh riwayat baris kode dari `83` repo terkomputasi |
+| **Commit Message Hygiene** | `64.6%` | Dari **100% seluruh `1,648` commit** di `83` repo aktif |
 | **Repo dengan CI/CD Aktif** | `14 dari 83 repo` `███░░░░░░░░░░░░░░░░░` | Otomasi *pipeline* (`.github/workflows`) |
 | **Repo dengan Struktur Test** | `19 dari 83 repo` `████░░░░░░░░░░░░░░░░` | Keberadaan direktori `test/`, `tests/`, `__tests__/`, atau `spec/` |
 
 ### ⚠️ Temuan Audit & Anomali Repositori (Perlu Perhatian)
-- **`stream`**: Ukuran repositori besar (`36366.9 MB`) — indikasi file biner/aset besar tanpa Git LFS.
 - **`local_html_transfer`**: Terdeteksi *bulk/giant commit* (`+91,712` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`auto_reply`**: Terdeteksi *bulk/giant commit* (`+16,619` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`photobooth`**: Terdeteksi *bulk/giant commit* (`+85,336` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`absen.saedigitalakademi.com`**: Terdeteksi *bulk/giant commit* (`+56,854` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`asap-estafet-vibecoding`**: Terdeteksi *bulk/giant commit* (`+1,371,955` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`mai_sektor`**: Terdeteksi *bulk/giant commit* (`+1,381,151` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
-- **`ukmipolmed.xo.je`**: Terdeteksi *bulk/giant commit* (`+16,633` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`sholat_nu_muhamadiyah`**: Terdeteksi *bulk/giant commit* (`+20,391` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`win7app-display-mirroring`**: Terdeteksi *bulk/giant commit* (`+117,022` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`web-sig_bengkel_motor_medan_baru`**: Terdeteksi *bulk/giant commit* (`+36,176` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
@@ -42,5 +40,5 @@
 Banyak *bulk/giant commit* terjadi karena saat memulai proyek baru saya sering tidak melakukan `git init` lebih awal (fokus pada uji ide terlebih dahulu), lalu saat proyek dianggap cukup stabil baru di-backup ke GitHub sekaligus dalam satu commit besar. Saya juga kadang bekerja pada source code yang sudah jadi, kemudian melakukan beberapa pembaruan dan mengunggahnya sebagai backup ke repo GitHub. Oleh karena itu, lonjakan baris kode dalam satu siklus commit biasanya merupakan hasil backup massal, bukan indikasi kode tanpa pemecahan atomik.
 
 
-*Audit populasi penuh (**100% dari 83 repositori orisinal** & **1,636 commit**) dijalankan otomatis via GitHub API pada `2026-11-16 08:50 UTC`*
+*Audit populasi penuh (**100% dari 83 repositori orisinal** & **1,648 commit**) dijalankan otomatis via GitHub API pada `2026-11-17 07:41 UTC`*
 <!-- AUDIT_END -->
