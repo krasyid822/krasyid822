@@ -6,8 +6,8 @@
 |:---|:---|:---|
 | **External Merged PRs** | `0 PRs` | Seluruh PR *merged* di repositori luar (sepanjang masa) |
 | **Code Reviews Performed** | `1 Reviews` | Audit & tinjauan kode terhadap kontributor lain |
-| **Refactoring Ratio** | `57.0%` (`-4,049,146` / `+7,101,025` baris) | Seluruh riwayat baris kode dari `85` repo terkomputasi |
-| **Commit Message Hygiene** | `64.8%` | Dari **100% seluruh `1,662` commit** di `85` repo aktif |
+| **Refactoring Ratio** | `56.9%` (`-4,049,452` / `+7,120,123` baris) | Seluruh riwayat baris kode dari `85` repo terkomputasi |
+| **Commit Message Hygiene** | `64.9%` | Dari **100% seluruh `1,665` commit** di `85` repo aktif |
 | **Repo dengan CI/CD Aktif** | `14 dari 85 repo` `███░░░░░░░░░░░░░░░░░` | Otomasi *pipeline* (`.github/workflows`) |
 | **Repo dengan Struktur Test** | `19 dari 85 repo` `████░░░░░░░░░░░░░░░░` | Keberadaan direktori `test/`, `tests/`, `__tests__/`, atau `spec/` |
 
@@ -41,5 +41,5 @@
 Banyak *bulk/giant commit* terjadi karena saat memulai proyek baru saya sering tidak melakukan `git init` lebih awal (fokus pada uji ide terlebih dahulu), lalu saat proyek dianggap cukup stabil baru di-backup ke GitHub sekaligus dalam satu commit besar. Saya juga kadang bekerja pada source code yang sudah jadi, kemudian melakukan beberapa pembaruan dan mengunggahnya sebagai backup ke repo GitHub. Oleh karena itu, lonjakan baris kode dalam satu siklus commit biasanya merupakan hasil backup massal, bukan indikasi kode tanpa pemecahan atomik.
 
 
-*Audit populasi penuh (**100% dari 85 repositori orisinal** & **1,662 commit**) dijalankan otomatis via GitHub API pada `2026-11-21 06:56 UTC`*
+*Audit populasi penuh (**100% dari 85 repositori orisinal** & **1,665 commit**) dijalankan otomatis via GitHub API pada `2026-11-22 06:29 UTC`*
 <!-- AUDIT_END -->
