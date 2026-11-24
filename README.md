@@ -6,31 +6,25 @@
 |:---|:---|:---|
 | **External Merged PRs** | `0 PRs` | Seluruh PR *merged* di repositori luar (sepanjang masa) |
 | **Code Reviews Performed** | `1 Reviews` | Audit & tinjauan kode terhadap kontributor lain |
-| **Refactoring Ratio** | `50.3%` (`-2,819,627` / `+5,604,034` baris) | Seluruh riwayat baris kode dari `76` repo terkomputasi |
-| **Commit Message Hygiene** | `64.9%` | Dari **100% seluruh `1,668` commit** di `85` repo aktif |
+| **Refactoring Ratio** | `56.8%` (`-4,050,894` / `+7,134,872` baris) | Seluruh riwayat baris kode dari `85` repo terkomputasi |
+| **Commit Message Hygiene** | `65.1%` | Dari **100% seluruh `1,680` commit** di `85` repo aktif |
 | **Repo dengan CI/CD Aktif** | `14 dari 85 repo` `███░░░░░░░░░░░░░░░░░` | Otomasi *pipeline* (`.github/workflows`) |
 | **Repo dengan Struktur Test** | `19 dari 85 repo` `████░░░░░░░░░░░░░░░░` | Keberadaan direktori `test/`, `tests/`, `__tests__/`, atau `spec/` |
 
 ### ⚠️ Temuan Audit & Anomali Repositori (Perlu Perhatian)
-- **`ukmipolmed.xo.je`**: Komputasi *diff* ditolak/timeout oleh API GitHub (`COMPUTE_TIMEOUT_202`) — indikasi riwayat *commit* terlalu masif atau file biner berat.
+- **`ukmipolmed.xo.je`**: Terdeteksi *bulk/giant commit* (`+28,099` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`local_html_transfer`**: Terdeteksi *bulk/giant commit* (`+91,712` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
-- **`for-manifest-json-pwa`**: Komputasi *diff* ditolak/timeout oleh API GitHub (`COMPUTE_TIMEOUT_202`) — indikasi riwayat *commit* terlalu masif atau file biner berat.
-- **`tugas-figma`**: Komputasi *diff* ditolak/timeout oleh API GitHub (`COMPUTE_TIMEOUT_202`) — indikasi riwayat *commit* terlalu masif atau file biner berat.
-- **`alat_magang`**: Komputasi *diff* ditolak/timeout oleh API GitHub (`COMPUTE_TIMEOUT_202`) — indikasi riwayat *commit* terlalu masif atau file biner berat.
 - **`auto_reply`**: Terdeteksi *bulk/giant commit* (`+16,619` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`photobooth`**: Terdeteksi *bulk/giant commit* (`+85,336` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`absen.saedigitalakademi.com`**: Terdeteksi *bulk/giant commit* (`+56,854` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`asap-estafet-vibecoding`**: Terdeteksi *bulk/giant commit* (`+1,371,955` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`mai_sektor`**: Terdeteksi *bulk/giant commit* (`+1,381,151` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`sholat_nu_muhamadiyah`**: Terdeteksi *bulk/giant commit* (`+20,391` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
-- **`sig_bengkel_motor_medan_baru`**: Komputasi *diff* ditolak/timeout oleh API GitHub (`COMPUTE_TIMEOUT_202`) — indikasi riwayat *commit* terlalu masif atau file biner berat.
-- **`web-widget`**: Komputasi *diff* ditolak/timeout oleh API GitHub (`COMPUTE_TIMEOUT_202`) — indikasi riwayat *commit* terlalu masif atau file biner berat.
 - **`win7app-display-mirroring`**: Terdeteksi *bulk/giant commit* (`+117,022` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`web-sig_bengkel_motor_medan_baru`**: Terdeteksi *bulk/giant commit* (`+36,176` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
-- **`jadwal_sholat_app`**: Komputasi *diff* ditolak/timeout oleh API GitHub (`COMPUTE_TIMEOUT_202`) — indikasi riwayat *commit* terlalu masif atau file biner berat.
+- **`jadwal_sholat_app`**: Terdeteksi *bulk/giant commit* (`+872,476` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`undangan-pernikahan`**: Terdeteksi *bulk/giant commit* (`+30,782` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
-- **`local_msg`**: Komputasi *diff* ditolak/timeout oleh API GitHub (`COMPUTE_TIMEOUT_202`) — indikasi riwayat *commit* terlalu masif atau file biner berat.
-- **`AlMatsurat`**: Komputasi *diff* ditolak/timeout oleh API GitHub (`COMPUTE_TIMEOUT_202`) — indikasi riwayat *commit* terlalu masif atau file biner berat.
+- **`local_msg`**: Terdeteksi *bulk/giant commit* (`+534,172` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`github-pages`**: Terdeteksi *bulk/giant commit* (`+176,037` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`pemrograman-web`**: Terdeteksi *bulk/giant commit* (`+22,541` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 ### ℹ️ Repositori dengan Penjelasan (Dikecualikan dari Anomali)
@@ -47,5 +41,5 @@
 Banyak *bulk/giant commit* terjadi karena saat memulai proyek baru saya sering tidak melakukan `git init` lebih awal (fokus pada uji ide terlebih dahulu), lalu saat proyek dianggap cukup stabil baru di-backup ke GitHub sekaligus dalam satu commit besar. Saya juga kadang bekerja pada source code yang sudah jadi, kemudian melakukan beberapa pembaruan dan mengunggahnya sebagai backup ke repo GitHub. Oleh karena itu, lonjakan baris kode dalam satu siklus commit biasanya merupakan hasil backup massal, bukan indikasi kode tanpa pemecahan atomik.
 
 
-*Audit populasi penuh (**100% dari 85 repositori orisinal** & **1,668 commit**) dijalankan otomatis via GitHub API pada `2026-11-23 07:22 UTC`*
+*Audit populasi penuh (**100% dari 85 repositori orisinal** & **1,680 commit**) dijalankan otomatis via GitHub API pada `2026-11-24 09:43 UTC`*
 <!-- AUDIT_END -->
