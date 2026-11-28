@@ -6,14 +6,14 @@
 |:---|:---|:---|
 | **External Merged PRs** | `0 PRs` | Seluruh PR *merged* di repositori luar (sepanjang masa) |
 | **Code Reviews Performed** | `1 Reviews` | Audit & tinjauan kode terhadap kontributor lain |
-| **Refactoring Ratio** | `56.6%` (`-4,050,830` / `+7,153,123` baris) | Seluruh riwayat baris kode dari `75` repo terkomputasi |
-| **Commit Message Hygiene** | `65.5%` | Dari **100% seluruh `1,674` commit** di `81` repo aktif |
+| **Refactoring Ratio** | `56.6%` (`-4,053,345` / `+7,158,254` baris) | Seluruh riwayat baris kode dari `81` repo terkomputasi |
+| **Commit Message Hygiene** | `65.6%` | Dari **100% seluruh `1,676` commit** di `81` repo aktif |
 | **Repo dengan CI/CD Aktif** | `15 dari 81 repo` `███░░░░░░░░░░░░░░░░░` | Otomasi *pipeline* (`.github/workflows`) |
 | **Repo dengan Struktur Test** | `19 dari 81 repo` `████░░░░░░░░░░░░░░░░` | Keberadaan direktori `test/`, `tests/`, `__tests__/`, atau `spec/` |
 
 ### ⚠️ Temuan Audit & Anomali Repositori (Perlu Perhatian)
+- **`ukmipolmed.xo.je`**: Terdeteksi *bulk/giant commit* (`+32,216` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`static-web-tools`**: Terdeteksi *bulk/giant commit* (`+20,183` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
-- **`ukmipolmed.xo.je`**: Terdeteksi *bulk/giant commit* (`+28,099` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`local_html_transfer`**: Terdeteksi *bulk/giant commit* (`+91,712` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`auto_reply`**: Terdeteksi *bulk/giant commit* (`+16,619` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`photobooth`**: Terdeteksi *bulk/giant commit* (`+85,336` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
@@ -28,12 +28,6 @@
 - **`local_msg`**: Terdeteksi *bulk/giant commit* (`+534,172` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`github-pages`**: Terdeteksi *bulk/giant commit* (`+176,037` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
 - **`pemrograman-web`**: Terdeteksi *bulk/giant commit* (`+22,541` baris dalam satu siklus) — indikasi file auto-generated, dataset, atau kode tanpa pemecahan atomik.
-- **`KatalogIndomaret`**: Komputasi *diff* ditolak/timeout oleh API GitHub (`COMPUTE_TIMEOUT_202`) — indikasi riwayat *commit* terlalu masif atau file biner berat.
-- **`TugasAkhirCodifyPortofolioWeb`**: Komputasi *diff* ditolak/timeout oleh API GitHub (`COMPUTE_TIMEOUT_202`) — indikasi riwayat *commit* terlalu masif atau file biner berat.
-- **`Profile-Hover-Challenge`**: Komputasi *diff* ditolak/timeout oleh API GitHub (`COMPUTE_TIMEOUT_202`) — indikasi riwayat *commit* terlalu masif atau file biner berat.
-- **`MusixPlayer`**: Komputasi *diff* ditolak/timeout oleh API GitHub (`COMPUTE_TIMEOUT_202`) — indikasi riwayat *commit* terlalu masif atau file biner berat.
-- **`TwitterEmbed`**: Komputasi *diff* ditolak/timeout oleh API GitHub (`COMPUTE_TIMEOUT_202`) — indikasi riwayat *commit* terlalu masif atau file biner berat.
-- **`project_akhir_be`**: Komputasi *diff* ditolak/timeout oleh API GitHub (`COMPUTE_TIMEOUT_202`) — indikasi riwayat *commit* terlalu masif atau file biner berat.
 ### ℹ️ Repositori dengan Penjelasan (Dikecualikan dari Anomali)
 - **`stream_drive`**: Repo ini sengaja digunakan sebagai tempat penyimpanan file biner .ts (transport stream). Besarnya repo (~100 GB) tidak mengindikasikan masalah karena tujuan utamanya adalah arsip file biner, bukan kode sumber. Oleh karena itu, temuan ukuran besar dan timeout diff pada repo ini dikecualikan dari anomali audit.
 - **`ukmipolmed`**: Repo diarsipkan karena menyimpan konten unik yang tidak boleh dihapus. Ukuran besar (~1.7 GB) diketahui sengaja dan tidak akan diperbarui karena terlalu besar untuk di cloning. Temuan ukuran besar dikecualikan dari anomali audit.
@@ -48,5 +42,5 @@
 Banyak *bulk/giant commit* terjadi karena saat memulai proyek baru saya sering tidak melakukan `git init` lebih awal (fokus pada uji ide terlebih dahulu), lalu saat proyek dianggap cukup stabil baru di-backup ke GitHub sekaligus dalam satu commit besar. Saya juga kadang bekerja pada source code yang sudah jadi, kemudian melakukan beberapa pembaruan dan mengunggahnya sebagai backup ke repo GitHub. Oleh karena itu, lonjakan baris kode dalam satu siklus commit biasanya merupakan hasil backup massal, bukan indikasi kode tanpa pemecahan atomik.
 
 
-*Audit populasi penuh (**100% dari 81 repositori orisinal** & **1,674 commit**) dijalankan otomatis via GitHub API pada `2026-11-27 08:05 UTC`*
+*Audit populasi penuh (**100% dari 81 repositori orisinal** & **1,676 commit**) dijalankan otomatis via GitHub API pada `2026-11-28 07:29 UTC`*
 <!-- AUDIT_END -->
